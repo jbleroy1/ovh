@@ -35,7 +35,7 @@ frontend public
 backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
-server {{.ID}} {{ .Address }}:{{ .Port }}
+server {{ .Name }} {{ .Address }}:{{ .Port }}
 reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
                 {{ end }}
             {{ end }}
