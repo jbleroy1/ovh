@@ -41,3 +41,13 @@ reqirep ^([^\ :]*)\ /{{ .Name }}/(.*) \1\ /\2
             {{ end }}
     {{ end }}
 {{ end }}
+
+
+listen stats
+    bind *:9000
+    mode http
+    stats enable
+    stats hide-version
+    stats realm Haproxy\ Statistics
+    stats uri /haproxy_stats
+    stats auth Username:Password
