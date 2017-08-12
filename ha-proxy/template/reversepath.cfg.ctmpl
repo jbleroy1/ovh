@@ -16,9 +16,9 @@ frontend public
     bind *:80
     bind *:443
 
- acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
- acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
- acl host_by_ip    req.hdr(Host) 51.254.114.184
+    acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
+    acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
+    acl host_by_ip    req.hdr(Host) 51.254.114.184
 
 
 {{ range services }}
