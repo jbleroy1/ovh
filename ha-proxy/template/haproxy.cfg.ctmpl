@@ -1,0 +1,41 @@
+global
+    log 127.0.0.1 local0
+
+defaults
+    log global
+    retries 2
+    timeout connect 300000
+    timeout server 500000
+    timeout client 500000
+    mode http
+    balance roundrobin
+    option http-server-close
+    timeout http-keep-alive 3000
+
+frontend public
+    bind *:80
+
+{{ range services }}
+{{if .Tags | contains "HTTP"}}
+    acl host_{{ .Name }} hdr_beg(host) -i {{ .Name }}
+    use_backend {{ .Name }}_backend if host_{{ .Name }}
+    {{ end }}
+{{ end }}
+
+### Consul-configured backend services ###
+{{ range services }}  {{if .Tags | contains "HTTP"}}
+        backend {{ .Name }}_backend
+        {{ range service .Name }}
+        {{if .Tags | contains "HTTP"}} server {{.ID}} {{ .Address }}:{{ .Port }}{{ end }}{{ end }}
+    {{ end }}
+{{ end }}
+
+
+listen stats
+    bind *:9000
+    mode http
+    stats enable
+    stats hide-version
+    stats realm Haproxy\ Statistics
+    stats uri /haproxy_stats
+    stats auth Username:Password

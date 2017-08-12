@@ -1,0 +1,43 @@
+global
+    log 127.0.0.1 local0
+
+defaults
+    log global
+    retries 2
+    timeout connect 300000
+    timeout server 500000
+    timeout client 500000
+    mode http
+    balance roundrobin
+    option http-server-close
+    timeout http-keep-alive 3000
+
+frontend public
+    bind *:80
+    bind *:443
+
+ acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
+ acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
+ acl host_by_ip    req.hdr(Host) 51.254.114.184
+
+
+{{ range services }}
+{{if .Tags | contains "HTTP"}}
+     acl path_mirror_{{ .Name }} path -m beg /{{ .Name }}/
+     use_backend {{ .Name }}_backend if host_ovh_net path_mirror_{{ .Name }}
+     use_backend {{ .Name }}_backend if host_eu path_mirror_{{ .Name }}
+     use_backend {{ .Name }}_backend if host_by_ip path_mirror_{{ .Name }}
+{{ end }}
+{{ end }}
+
+{{ range services }}
+    {{if .Tags | contains "HTTP"}}
+backend {{ .Name }}_backend
+            {{ range service .Name }}
+                {{if .Tags | contains "HTTP"}}
+server {{.ID}} 127.0.0.1:{{ .Port }}
+reqirep  ^([^ :]*)\ /{{ .Name }}/(.*)     \1\ /\2
+                {{ end }}
+            {{ end }}
+    {{ end }}
+{{ end }}
