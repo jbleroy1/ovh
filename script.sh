@@ -27,7 +27,7 @@ docker run -d -p 3306:3306 -v $(pwd)/storage/sql/data:/var/lib/mysql --name mysq
 haproxy(){
 echo 'launch ha proxy'
 docker build -t jb/haproxy ha-proxy/
-docker run -d --name=haproxy -p 80:80 -p 9000:9000 jb/haproxy
+docker run -d --name=haproxy -p 80:80 -p 9000:9000 --dns=172.17.0.2 --dns-search=service.consul jb/haproxy
 
 }
 
