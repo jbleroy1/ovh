@@ -11,7 +11,7 @@ docker run -d --name=registrator --net=host --volume=/var/run/docker.sock:/tmp/d
 consul(){
 echo 'launch consul....'
 #docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --net=host --name=consul -e VIRTUAL_HOST=consul.fpl.labs.com -e VIRTUAL_PORT=8500 progrium/consul -server -bootstrap
-docker run -d --name=consul -h consul.fpl.labs.com -e "SERVICE_8400_TAGS=RPC" -e "SERVICE_8400_NAME=consul" -e "SERVICE_8302_NAME=consul" -e "SERVICE_8301_NAME=consul" -e "SERVICE_8300_NAME=consul" -e "SERVICE_8500_NAME=consul" -e "SERVICE_53_NAME=consul" -e "SERVICE_8500_TAGS=HTTP" -e "SERVICE_53_TAGS=DNS" -p 8500:8500 -p 8600:53/udp progrium/consul -server -bootstrap
+docker run -d --name=consul -e "SERVICE_8400_TAGS=RPC" -e "SERVICE_8400_NAME=consul" -e "SERVICE_8302_NAME=consul" -e "SERVICE_8301_NAME=consul" -e "SERVICE_8300_NAME=consul" -e "SERVICE_8500_NAME=consul" -e "SERVICE_53_NAME=consul" -e "SERVICE_8500_TAGS=HTTP" -e "SERVICE_53_TAGS=DNS" -p 8500:8500 -p 8600:53/udp progrium/consul -server -bootstrap
 }
 
 wildfly(){
