@@ -35,8 +35,8 @@ frontend public
 backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
-server {{.ID}} 127.0.0.1:{{ .Port }}
-reqirep  ^([^ :]*)\ /{{ .Name }}/(.*)     \1\ /\2
+server {{.ID}} {{ .Address }}:{{ .Port }}
+reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
                 {{ end }}
             {{ end }}
     {{ end }}
