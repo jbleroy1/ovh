@@ -13,8 +13,8 @@ defaults
     timeout http-keep-alive 3000
 
 frontend public
+
     bind *:80
-    bind *:443
 
     acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
     acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
@@ -36,7 +36,7 @@ backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
 server {{ .Name }} {{ .Address }}:{{ .Port }}
-reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
+reqirep ^([^\ :]*)\ /{{ .Name }}/(.*) \1\ /\2
                 {{ end }}
             {{ end }}
     {{ end }}
