@@ -17,18 +17,11 @@ docker run -d --name=consul -h consul.fpl.labs.com -e "SERVICE_8400_TAGS=RPC" -e
 wildfly(){
 echo 'launch consul....'
 #docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --net=host --name=consul -e VIRTUAL_HOST=consul.fpl.labs.com -e VIRTUAL_PORT=8500 progrium/consul -server -bootstrap
-docker run -d -p 80:8080 -p 9990:9990 --name widldfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
-docker run -d --name=wildfly -e "SERVICE_NAME=kong-admin" -e "SERVICE_TAGS=HTTP" -e "SERVICE_8302_NAME=consul" -e "SERVICE_8301_NAME=consul" -e "SERVICE_8300_NAME=consul" -e "SERVICE_8500_NAME=consul" -e "SERVICE_53_NAME=consul" -e "SERVICE_8500_TAGS=HTTP" -e "SERVICE_53_TAGS=DNS" -p 8500:8500 -p 8600:53/udp progrium/consul -server -bootstrap
-}
-
-kong_gui(){
-echo 'launch KongGui....'
-docker run -d -h kong-admin.fpl.labs.com --add-host="kong.fpl.labs.com:172.17.0.4"  --name kong-gui -e "SERVICE_NAME=kong-admin" -e "SERVICE_TAGS=HTTP" -p 8123:8080 pgbi/kong-dashboard
-
+docker run -d -p 8080:8080 -e "SERVICE_8080_NAME=wildfly" -e "SERVICE_8080_TAGS=HTTP" -p 9990:9990 "SERVICE_9990_NAME=wildflyadmin" -e "SERVICE_9990_TAGS=HTTP"  --name widldfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
 }
 mysql() {
 echo 'launch mysql....'
-docker run -d -p 3306:3306 -v $(pwd)/storage/sql/data:/var/lib/mysql --name mysql -h mysql -e "SERVICE_3306_NAME=keycloak"  -e "SERVICE_3306_TAGS=mysql"  -e MYSQL_ROOT_PASSWORD=root mysql:5.7.12
+docker run -d -p 3306:3306 -v $(pwd)/storage/sql/data:/var/lib/mysql --name mysql -h mysql -e "SERVICE_3306_NAME=mysql"  -e "SERVICE_3306_TAGS=mysql"  -e MYSQL_ROOT_PASSWORD=root mysql:5.7.12
 }
 
 haproxy(){
