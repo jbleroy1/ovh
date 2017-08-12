@@ -17,7 +17,7 @@ docker run -d --name=consul -e "SERVICE_8400_TAGS=RPC" -e "SERVICE_8400_NAME=con
 wildfly(){
 echo 'launch consul....'
 #docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --net=host --name=consul -e VIRTUAL_HOST=consul.fpl.labs.com -e VIRTUAL_PORT=8500 progrium/consul -server -bootstrap
-docker run -d -p 8080:8080 -e "SERVICE_8080_NAME=wildfly" -e "SERVICE_8080_TAGS=HTTP" -p 9990:9990 -e "SERVICE_9990_NAME=wildflyadmin" -e "SERVICE_9990_TAGS=HTTP"  --name widldfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+docker run -d -p 8080:8080 -e "SERVICE_8080_NAME=wildfly" -e "SERVICE_8080_TAGS=HTTP" -p 9990:9990 -e "SERVICE_9990_NAME=wildflyadmin" -e "SERVICE_9990_TAGS=HTTP"  --name wildfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
 }
 mysql() {
 echo 'launch mysql....'
