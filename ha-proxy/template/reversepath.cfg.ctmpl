@@ -35,9 +35,11 @@ frontend public
 backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
-server {{ .Name }} {{ .Address }}:{{ .Port }}
+server {{ .Node }} {{ .Address }}:{{ .Port }}
 http-request set-header Host {{ .Address }}:{{ .Port }}
 reqrep ^([^\ :]*)\ /{{ .Name }}[/]?(.*)  \1\ /\2
+acl response-is-redirect res.hdr(Location) -m found
+rspirep ^Location:\ (http|https)://{{ .Address }}:{{ .Port }}\/(.*)   Location:\ \1://vps444089.ovh.net/{{ .Name }}/\2  if response-is-redirect
                 {{ end }}
             {{ end }}
     {{ end }}
