@@ -19,8 +19,8 @@ frontend public
     acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
     acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
     acl host_by_ip    req.hdr(Host) 51.254.114.184
-
-
+    acl path_v1 path -m beg /v1/
+    use_backend consul_backend if host_ovh_net path_v1
 {{ range services }}
 {{if .Tags | contains "HTTP"}}
      acl path_mirror_{{ .Name }} path -m beg /{{ .Name }}/
@@ -29,7 +29,6 @@ frontend public
      use_backend {{ .Name }}_backend if host_by_ip path_mirror_{{ .Name }}
 {{ end }}
 {{ end }}
-
 {{ range services }}
     {{if .Tags | contains "HTTP"}}
 backend {{ .Name }}_backend
@@ -37,6 +36,7 @@ backend {{ .Name }}_backend
                 {{if .Tags | contains "HTTP"}}
 server {{ .Name }} {{ .Address }}:{{ .Port }}
 http-request set-header Host {{ .Address }}:{{ .Port }}
+
 reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
 acl hdr_location_{{ .Name }} res.hdr(Location) -m found
 rspirep ^Location:\ (/.*) Location:\ /{{ .Name }}\1 if hdr_location_{{ .Name }}
