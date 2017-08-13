@@ -39,7 +39,11 @@ http-request set-header Host {{ .Address }}:{{ .Port }}
 
 reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
 acl hdr_location_{{ .Name }} res.hdr(Location) -m found
+acl hdr_location_{{ .Name }} res.hdr(Location) -m found
+acl hdr_location_{{ .Name }}_ip res.hdr(Host) -m eq {{ .Address }}:{{ .Port }}
 rspirep ^Location:\ (/.*) Location:\ /{{ .Name }}\1 if hdr_location_{{ .Name }}
+rspirep ^Location:\ (/.*) Location:\ /{{ .Name }}\1 if hdr_location_{{ .Name }}_ip
+
 
                 {{ end }}
             {{ end }}
