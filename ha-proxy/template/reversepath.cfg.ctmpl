@@ -37,7 +37,7 @@ backend {{ .Name }}_backend
                 {{if .Tags | contains "HTTP"}}
 server {{ .Node }} {{ .Address }}:{{ .Port }}
 
-reqirep ^([^\ ]*\ /){{ .Name }}[/]?(.*)  \1 /\2
+reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
 acl response-is-redirect res.hdr(Location) -m found
 rspirep ^Location:\ (http?://vps444089.ovh.net(:[0-9]+)?)?(/.*) Location:\ /{{ .Name }}/\1 if hdr_location
                 {{ end }}
