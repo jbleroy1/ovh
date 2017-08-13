@@ -1,6 +1,6 @@
 FROM alpine:3.3
 
-ENV CONSUL_TEMPLATE_VERSION=0.19.0
+ENV CONSUL_TEMPLATE_VERSION=0.16.0
 
 RUN apk update && \
     apk add bash haproxy ca-certificates zip && \
