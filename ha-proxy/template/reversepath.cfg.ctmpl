@@ -36,7 +36,7 @@ backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
 server {{ .Name }} {{ .Address }}:{{ .Port }}
-http-request set-header Host vps444089.ovh.net
+http-request set-header Host {{ .Address }}:{{ .Port }}
 reqirep ^([^\ :]*)\ /{{ .Name }}/(.*) \1\ /\2
 acl hdr_location_{{ .Name }} res.hdr(Location) -m found
 rspirep ^Location:\ (http?://vps444089.ovh.net(:[0-9]+)?)?(/.*) Location:\ /{{ .Name }}/ if hdr_location_{{ .Name }}
