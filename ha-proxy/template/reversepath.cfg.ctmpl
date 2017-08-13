@@ -41,6 +41,7 @@ acl hdr_location_{{ .Name }} res.hdr(Location) -m found
 acl hdr_location_{{ .Name }}_ip res.hdr(Location) -m beg {{ .Address }}:{{ .Port }}
 rspirep ^Location:\ (/.*) Location:\ /{{ .Name }}\1 if hdr_location_{{ .Name }}
 rspirep ^Location:\ (/.*) Location:\ /{{ .Name }}\1 if hdr_location_{{ .Name }}_ip
+
                 {{ end }}
             {{ end }}
     {{ end }}

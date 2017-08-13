@@ -1,0 +1,34 @@
+{
+  "apiVersion" : "1",
+  "swaggerVersion" : "1.2",
+  "basePath" : "/rest-sample/rest",
+  "resourcePath" : "/mock",
+  "apis" : [ {
+    "path" : "/mock",
+    "operations" : [ {
+      "method" : "POST",
+      "nickname" : "returnSame",
+      "type" : "Object",
+      "parameters" : [ {
+        "type" : "Object",
+        "paramType" : "body",
+        "name" : "o",
+        "required" : true
+      } ],
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ]
+    }, {
+      "method" : "PUT",
+      "nickname" : "returnSameForPut",
+      "type" : "Object",
+      "parameters" : [ {
+        "type" : "Object",
+        "paramType" : "body",
+        "name" : "o",
+        "required" : true
+      } ],
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ]
+    } ]
+  } ]
+}

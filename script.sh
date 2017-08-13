@@ -15,7 +15,7 @@ docker run -d --name=consul -e "SERVICE_8400_TAGS=RPC" -e "SERVICE_8400_NAME=con
 
 wildfly(){
 echo 'launch consul....'
-docker run -d -p 8080:8080 -e "SERVICE_8080_NAME=wildfly" -e "SERVICE_8080_TAGS=HTTP" -p 9990:9990 -e "SERVICE_9990_NAME=wadmin" -e "SERVICE_9990_TAGS=HTTP"  --name wildfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+docker run -d -p 9999:9999 -p 8080:8080 -e "SERVICE_8080_NAME=wildfly" -e "SERVICE_8080_TAGS=HTTP" -p 9990:9990 -e "SERVICE_9990_NAME=wadmin" -e "SERVICE_9990_TAGS=HTTP"  --name wildfly jboss/wildfly /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
 docker exec -it wildfly /bin/bash wildfly/bin/add-user.sh admin admin
 }
 mysql() {
