@@ -53,8 +53,8 @@
               <reportOutputDirectory>src/main/webapp</reportOutputDirectory>
               <useStandardDocletOptions>false</useStandardDocletOptions>
               <additionalparam>-apiVersion 1
-		-docBasePath /rest-sample/apidocs
-		-apiBasePath /rest-sample/rest
+		-docBasePath /sample/apidocs
+		-apiBasePath /sample/rest
 		-swaggerUiPath ${project.build.directory}/</additionalparam>
             </configuration>
           </execution>
