@@ -35,6 +35,7 @@ frontend public
 backend {{ .Name }}_backend
             {{ range service .Name }}
                 {{if .Tags | contains "HTTP"}}
+server server {{ .Node }} {{ .Address }}:{{ .Port }}
 http-request set-header Host {{ .Address }}:{{ .Port }}
 reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
 acl hdr_location_{{ .Name }} res.hdr(Location) -m found
