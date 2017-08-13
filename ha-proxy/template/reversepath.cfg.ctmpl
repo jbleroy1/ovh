@@ -15,6 +15,7 @@ defaults
 frontend public
 
     bind *:80
+    log /dev/log local0 debug
 
     acl host_ovh_net    req.hdr(Host) vps444089.ovh.net
     acl host_eu    req.hdr(Host) 184.ip-51-254-114.eu
