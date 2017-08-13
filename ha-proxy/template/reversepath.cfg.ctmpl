@@ -37,8 +37,7 @@ backend {{ .Name }}_backend
                 {{if .Tags | contains "HTTP"}}
 server {{ .Name }} {{ .Address }}:{{ .Port }}
 http-request set-header Host {{ .Address }}:{{ .Port }}
-
-
+reqrep ^([^\ :]*)\ /{{ .Name }}[/]?(.*)  \1\ /\2
                 {{ end }}
             {{ end }}
     {{ end }}
