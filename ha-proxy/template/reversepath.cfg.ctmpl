@@ -39,7 +39,7 @@ server {{ .Node }} {{ .Address }}:{{ .Port }}
 http-request set-header Host {{ .Address }}:{{ .Port }}
 reqrep ^([^\ ]*\ /){{ .Name }}[/]?(.*)     \1\2
 acl hdr_location_{{ .Name }} res.hdr(Location) -m found
-rspirep ^Location:\ (http?://{{ .Address }}:{{ .Port }})?(/.*) Location:\ /{{ .Name }}3 if hdr_location_{{ .Name }}
+rspirep ^Location:\ (http?://{{ .Address }}:{{ .Port }})?(/.*) Location:\ /{{ .Name }}/\3 if hdr_location_{{ .Name }}
 
                 {{ end }}
             {{ end }}
